@@ -104,7 +104,7 @@ This project includes a Docker setup for easy containerization.
 docker-compose up -d
 ```
 
-For ease of testing, we provide a **Postman collection** with all endpoints, available [here](./Translation Management API.postman_collection.json).
+For ease of testing, we provide a **Postman collection** with all endpoints, available [here](./postman.json).
 
 
 ### Docker Services
