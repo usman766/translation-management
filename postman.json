@@ -1,0 +1,236 @@
+{
+	"info": {
+		"_postman_id": "cc20e100-e26a-4ae2-b753-307974bbc122",
+		"name": "Translation Management API",
+		"description": "Postman collection for Translation Management Service endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29408278"
+	},
+	"item": [
+		{
+			"name": "Get Translations",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{api_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/api/translations",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"translations"
+					]
+				},
+				"description": "Retrieve a list of translations with optional filters."
+			},
+			"response": []
+		},
+		{
+			"name": "Create Translation",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{api_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"locale\": \"en\", \"key\": \"welcome\", \"value\": \"Welcome\", \"tag\": \"web\"}"
+				},
+				"url": {
+					"raw": "{{url}}/api/translations",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"translations"
+					]
+				},
+				"description": "Add a new translation."
+			},
+			"response": []
+		},
+		{
+			"name": "Update Translation",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{api_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"locale\": \"en\",\r\n     \"key\": \"welcccome\",\r\n      \"value\": \"Welcome\", \r\n      \"tag\": \"web\"\r\n}   "
+				},
+				"url": {
+					"raw": "{{url}}/api/translations/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"translations",
+						"1"
+					]
+				},
+				"description": "Update an existing translation."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Translation",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{api_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/translations/{id}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"translations",
+						"{id}"
+					]
+				},
+				"description": "Delete a specific translation."
+			},
+			"response": []
+		},
+		{
+			"name": "Export Translations",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{api_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/translations/export",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"translations",
+						"export"
+					]
+				},
+				"description": "Export all translations as JSON grouped by locale."
+			},
+			"response": []
+		},
+		{
+			"name": "Login Admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Set API token\", function () {\r",
+							"    // Assuming the token is in the response JSON at 'authorization.access_token'\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const apiToken = responseJson.data.token;\r",
+							"    \r",
+							"    // Set the token in the Postman environment variable 'api_token'\r",
+							"    pm.environment.set(\"api_token\", apiToken);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"admin@admin.com\",\r\n    \"password\": \"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/auth/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
