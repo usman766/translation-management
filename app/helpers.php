@@ -17,3 +17,18 @@ function jsonResponse(string $message,  mixed $data = [], int $statusCode = 200)
         'data' => $data,
     ], status: $statusCode);
 }
+
+
+/**
+ * Handles repetitive try-catch exception handling.
+ * @param callable $callback
+ * @return JsonResponse
+ */
+function handleRequest(callable $callback): JsonResponse
+{
+    try {
+        return $callback();
+    } catch (Exception $e) {
+        return jsonResponse(__('messages.blog.error', ['error' => $e->getMessage()]), statusCode: 500);
+    }
+}

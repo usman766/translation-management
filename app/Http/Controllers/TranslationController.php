@@ -29,12 +29,10 @@ class TranslationController extends Controller
      */
     public function index(Request $request): AnonymousResourceCollection|JsonResponse
     {
-        try {
+        return handleRequest(function () use ($request) {
             $translations = $this->repository->index($request->only(['tag', 'key', 'content']));
             return TranslationResource::collection($translations);
-        } catch (\Exception $e) {
-            return jsonResponse(message: $e->getMessage(), statusCode: 500);
-        }
+        });
     }
 
     /**
@@ -45,12 +43,11 @@ class TranslationController extends Controller
      */
     public function store(TranslationRequest $request): JsonResponse|TranslationResource
     {
-        try {
+        return handleRequest(function () use ($request) {
+
             $translation = $this->repository->create($request->validated());
             return new TranslationResource($translation);
-        } catch (\Exception $e) {
-            return jsonResponse(message: $e->getMessage(), statusCode: 500);
-        }
+        });
     }
 
     /**
@@ -61,11 +58,9 @@ class TranslationController extends Controller
      */
     public function show(Translation $translation): JsonResponse|TranslationResource
     {
-        try {
+        return handleRequest(function () use ($translation) {
             return new TranslationResource($translation);
-        } catch (\Exception $e) {
-            return jsonResponse(message: $e->getMessage(), statusCode: 500);
-        }
+        });
     }
 
     /**
@@ -77,12 +72,11 @@ class TranslationController extends Controller
      */
     public function update(TranslationRequest $request, Translation $translation): TranslationResource|JsonResponse
     {
-        try {
+        return handleRequest(function () use ($request, $translation) {
+
             $this->repository->update($translation, $request->validated());
             return new TranslationResource($translation);
-        } catch (\Exception $e) {
-            return jsonResponse(message: $e->getMessage(), statusCode: 500);
-        }
+        });
     }
 
     /**
@@ -92,12 +86,10 @@ class TranslationController extends Controller
      */
     public function destroy(Translation $translation): JsonResponse
     {
-        try {
+        return handleRequest(function () use ($translation) {
             $this->repository->delete($translation);
             return jsonResponse(message: __('translation.deleted'), statusCode: 200);
-        } catch (\Exception $e) {
-            return jsonResponse(message: $e->getMessage(), statusCode: 500);
-        }
+        });
     }
 
     /**
@@ -108,11 +100,9 @@ class TranslationController extends Controller
      */
     public function export(Request $request): JsonResponse|AnonymousResourceCollection
     {
-        try {
+        return handleRequest(function () use ($request) {
             $translations = $this->repository->export($request->only(['tag', 'key', 'locale']));
             return TranslationResource::collection($translations);
-        } catch (\Exception $e) {
-            return jsonResponse(message: $e->getMessage(), statusCode: 500);
-        }
+        });
     }
 }
